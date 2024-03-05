@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\libro;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -44,9 +45,15 @@ class LibroController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(libro $libro)
+    public function show(Request $request, libro $libro)
     {
-        //
+        $respuesta = "";
+        if ($request->user()->hasRole('Basico')) {
+            $respuesta = "EL USUARIO TIENE ROL";
+        } else {
+            $respuesta = "EL USUARIO NO TIENE ROL";
+        }
+        return view('inicio', ['rolUsuario' => $respuesta]);
     }
 
     /**

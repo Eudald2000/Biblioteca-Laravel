@@ -13,4 +13,14 @@
     </div>
 </div>
 
+@if (Auth::check())
+    <p>
+        {{ Auth::user()->getRoleNames() }}
+    </p>
+@else
+<p>
+    EL USUARIO NO HA INICIADO SESSION
+</p>
+@endif
+
 @endsection

@@ -20,6 +20,7 @@ use App\Models\User;
 
 
 Route::get('/', [LibroController::class, 'unLibroPorISBN']);
+// Route::get('/{user}', [LibroController::class, 'show']);
 Route::get('/filtrar', [FormularioController::class, 'index']);
 
 
@@ -27,7 +28,7 @@ Route::get('/filtrar', [FormularioController::class, 'index']);
 Route::get('/google-auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
- 
+
 Route::get('/google-auth/callback', function () {
     $user = Socialite::driver('google')->stateless()->user();
     $user = User::updateOrCreate([
@@ -40,9 +41,9 @@ Route::get('/google-auth/callback', function () {
     Auth::login($user);
 
     return redirect('/');
-    
+
     // $user->token
-    
+
 });
 
 Route::get('/dashboard', function () {
