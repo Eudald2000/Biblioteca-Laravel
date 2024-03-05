@@ -20,7 +20,7 @@
       <label class="block text-gray-700 text-sm font-bold mb-2" for="editorial">
         Editorial
       </label>
-      <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="autor" name="autor">
+      <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="autor" name="editorial">
         <option value="">Seleccionar editorial</option>
         @foreach($editoriales as $editorial)
             <option value="{{ $editorial->id }}">{{ $editorial->editorial }}</option>
@@ -43,7 +43,7 @@
       <label class="block text-gray-700 text-sm font-bold mb-2" for="genero">
         Género
       </label>
-      <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="autor" name="autor">
+      <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="autor" name="genero">
         <option value="">Seleccionar genero</option>
         @foreach($generos as $genero)
             <option value="{{ $genero->id }}">{{ $genero->genero }}</option>
