@@ -5,6 +5,8 @@
 namespace Database\Factories;
 
 use App\Models\Resena;
+use App\Models\User;
+use App\Models\Libro;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ResenaFactory extends Factory
@@ -24,8 +26,8 @@ class ResenaFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => \App\Models\User::inRandomOrder()->first()->id,
-            'libro_id' => \App\Models\Libro::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
+            'libro_id' => Libro::inRandomOrder()->first()->id,
             'resena' => $this->faker->paragraphs(rand(1, 5), true),
         ];
     }

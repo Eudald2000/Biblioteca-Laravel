@@ -30,13 +30,15 @@ Route::get('/google-auth/redirect', function () {
 });
 
 Route::get('/google-auth/callback', function () {
-    $user = Socialite::driver('google')->stateless()->user();
+    $user = Socialite::driver('google')->user();
     $user = User::updateOrCreate([
         'google_id' => $user->id,
     ],[
         'name' => $user->name,
         'email' => $user->email,
     ]);
+
+    $user->assignRole(1);
 
     Auth::login($user);
 
