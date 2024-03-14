@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\autor;
+use App\Models\editorial;
+use App\Models\genero;
+use App\Models\libro;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -57,5 +61,14 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function gestion(){
+        $libros = libro::all();
+        $autores = autor::all();
+        $editoriales = editorial::all();
+        $generos = genero::all();
+        $usuarios = user::all();
+        return view('dashboard',['libros'=>$libros,'autores'=>$autores,'editoriales'=>$editoriales,'generos'=>$generos,'usuarios'=>$usuarios]);
     }
 }

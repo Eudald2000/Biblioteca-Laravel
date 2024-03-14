@@ -113,8 +113,8 @@
          }
       </style>
    </head>
-   <header class="bg-gray-800 p-8 flex justify-between items-center fixed w-full z-10 text-white">
-    <div class="flex items-center z-10"> 
+   <header class="transparent p-8 flex justify-between items-center fixed w-full z-10 text-white">
+    <div class="flex items-center z-10">
        <div id="menu">
           <div id="menu-bar" onclick="menuOnClick()">
              <div id="bar1" class="bar"></div>
@@ -146,14 +146,12 @@
           </nav>
        </div>
        <div class="menu-bg" id="menu-bg"></div>
-       {{-- <div class="fixed right-0 top-5"> 
-          <img src="logotipo.png" alt="Logo" class="h-12 mr-2">
-       </div> --}}
     </div>
-    <div>
-            <h1 class="text-2xl font-bold">Biblioteca Eudald</h1>
-            <p class="text-sm">Abierto cuando me salga de los huevos</p>
-        </div>
+    <div class="fixed right-0 top-5">
+        @role('admin')
+        <a href="{{url('/dashboard')}}"><button class="bg-white mr-4 text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out">DASHBOARD</button></a>
+        @endrole
+     </div>
  </header>
    <script>
       function menuOnClick() {

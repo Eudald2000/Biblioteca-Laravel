@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AutorController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LibroController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\FormularioController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,24 +35,33 @@ Route::get('/google-auth/callback', function () {
     $user = Socialite::driver('google')->user();
     $user = User::updateOrCreate([
         'google_id' => $user->id,
-    ],[
+    ], [
         'name' => $user->name,
         'email' => $user->email,
     ]);
 
-    $user->assignRole(1);
+    //return $user->hasRole('admin').' hola';
+    if (!$user->hasRole('admin') ){
+        $user->assignRole(2);
+    }
 
     Auth::login($user);
 
-    return redirect('/');
-
-    // $user->token
-
+    if (!$user->hasRole('admin') ){
+        return redirect('/');
+    }else{
+        return redirect('/dashboard');
+    }
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ProfileController::class,'gestion'])->middleware(['auth', 'role:admin'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'role:admin'])->name('dashboard');
+
+Route::get('/eliminarAutor/{id}', [AutorController::class, 'destroy'])->middleware(['auth', 'role:admin']);
+Route::get('/dashboard/mostrarAutor/{id}', [AutorController::class, 'getAutor']);
+Route::put('/dashboard/editarAutor/{id}', [AutorController::class, 'update'])->name('updateAutor');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

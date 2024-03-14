@@ -43,24 +43,33 @@ class AutorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(autor $autor)
+    public function edit(Request $request)
     {
-        //
+        $autor = autor::find($request->id);
+
     }
 
+    public function getAutor($id) {
+        $autor = Autor::findOrFail($id);
+        return response()->json($autor);
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, autor $autor)
-    {
-        //
+    public function update(Request $request, $id) {
+        $autor = Autor::findOrFail($id);
+        $autor->nombre = $request->input('nombreAutor');
+        $autor->save();
+        return redirect('dashboard');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(autor $autor)
+    public function destroy(Request $request)
     {
-        //
+        $autor = autor::find($request->id);
+        $autor->delete();
+        return redirect('/dashboard');
     }
 }

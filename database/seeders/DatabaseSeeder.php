@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,6 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $userRole = Role::firstOrCreate(['name' => 'Basico']);
+
         $this->call(autorSeeder::class);
         $this->call(editorialSeeder::class);
         $this->call(generosSeeder::class);
