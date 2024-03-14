@@ -62,6 +62,8 @@ Route::get('/dashboard', [ProfileController::class,'gestion'])->middleware(['aut
 Route::get('/eliminarAutor/{id}', [AutorController::class, 'destroy'])->middleware(['auth', 'role:admin']);
 Route::get('/dashboard/mostrarAutor/{id}', [AutorController::class, 'getAutor']);
 Route::put('/dashboard/editarAutor/{id}', [AutorController::class, 'update'])->name('updateAutor');
+Route::post('/dashboard/añadirAutor', [AutorController::class, 'create'])->name('crearAutor');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

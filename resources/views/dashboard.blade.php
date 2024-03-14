@@ -103,14 +103,15 @@
                 <label for="titulo">Nombre Autor a editar:</label><br>
                 <input type="text" id="nombreAutor" name="nombreAutor" required><br>
                 <input type="submit"></input>
-                {{-- <button onclick="editarAutor('{{ $autor->id }}')">EDITAR</button> --}}
             </form>
 
-            <form action="" id="añadirAutor" style="display: none">
-                <label for="titulo">Nombre nuevo autor:</label><br>
+            <form action="{{ route('crearAutor') }}" id="añadirAutor" method="POST" style="display: none">
+                @csrf
+                <label for="nombreAutor">Nombre nuevo autor:</label><br>
                 <input type="text" id="nombreAutor" name="nombreAutor" required><br>
-                <button>CREAR</button>
+                <input type="submit" value="Añadir Autor">
             </form>
+
 
         </div>
 

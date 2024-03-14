@@ -19,9 +19,14 @@ class AutorController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $nuevoAutor = new Autor();
+        $nuevoAutor->nombre = $request->nombreAutor;
+        $nuevoAutor->save();
+
+        // Redirigir a alguna página o retornar una respuesta JSON
+        return redirect('dashboard');
     }
 
     /**
@@ -45,7 +50,6 @@ class AutorController extends Controller
      */
     public function edit(Request $request)
     {
-        $autor = autor::find($request->id);
 
     }
 
