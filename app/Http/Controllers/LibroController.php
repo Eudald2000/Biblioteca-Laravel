@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\autor;
 use App\Models\libro;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -98,11 +99,17 @@ class LibroController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
-    { {
-            $libro = libro::find($request->id);
-            $libro->delete();
-            return redirect('/dashboard');
-        }
+    public function destroy($id)
+{
+    try {
+        // Intenta eliminar el libro
+        Libro::findOrFail($id)->delete();
+
+        // Si no hay excepción, redirige o muestra un mensaje de éxito
+        return redirect()->back()->with('success', 'Libro eliminado correctamente');
+    } catch (QueryException $e) {
+        // Captura la excepción de integridad referencial
+        return redirect()->back()->with('error', 'No se puede eliminar el libro. Tiene relaciones con otras tablas.');
     }
+}
 }

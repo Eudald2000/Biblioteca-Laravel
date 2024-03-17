@@ -66,8 +66,21 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $libro->id }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $libro->titulo }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->autor->nombre }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->editorial->editorial }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @isset($libro->autor)
+                                        {{ $libro->autor->nombre }}
+                                    @else
+                                        Sin datos
+                                    @endisset
+                                </td>
+                                {{-- <td class="px-6 py-4 whitespace-nowrap">{{ $libro->editorial->editorial }}</td> --}}
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @isset($libro->editorial)
+                                        {{ $libro->editorial->editorial }}
+                                    @else
+                                        Sin datos
+                                    @endisset
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $libro->ano_publicacion }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $libro->ISBN }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $libro->precio }}</td>
@@ -320,24 +333,108 @@
             {{-- ---------- EDITORIALES --------- --}}
             <div id="divEditorial" class="hidden">
                 <h2>EDITORIALES</h2>
-                <form action="" method="POST">
+                <button type="button" onclick="añadirEditorial()">AÑADIR</button>
+                <table id="tablaEditoriales" class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ID</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Editorial</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Eliminar</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($editoriales as $editorial)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $editorial->id }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $editorial->editorial }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ url('/eliminarEditorial/' . $editorial->id) }}"
+                                        class="text-red-600 hover:text-red-800">Eliminar</a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button type="button"
+                                    onclick="mostrarDatosEditorial({{ $editorial->id }})">EDITAR</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <form action="" id="editarEditorial" method="POST" style="display: none">
+                    @method('PUT')
+                    @csrf
+                    <label for="titulo">Editorial a editar:</label><br>
+                    <input type="text" id="nombreEditorial" name="nombreEditorial" required><br>
+                    <input type="submit"></input>
+                </form>
 
-                    <label for="nombre">Nombre:</label><br>
-                    <input type="text" id="editorial" name="editorial" required><br>
-
-                    <input type="submit" value="Guardar Libro">
+                <form action="{{ route('crearEditorial') }}" id="añadirEditorial" method="POST" style="display: none">
+                    @csrf
+                    <label for="nombreEditorial">Nueva editorial:</label><br>
+                    <input type="text" id="nombreEditorial" name="nombreEditorial" required><br>
+                    <input type="submit" value="Añadir Editorial">
                 </form>
             </div>
 
             {{-- ------------- GENEROS ---------- --}}
             <div id="divGenero" class="hidden">
                 <h2>GENEROS</h2>
-                <form action="" method="POST">
+                <button type="button" onclick="añadirGenero()">AÑADIR</button>
+                <table id="tablaGeneros" class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ID</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Genero</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Eliminar</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($generos as $genero)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $genero->id }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $genero->genero }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ url('/eliminarGenero/' . $genero->id) }}"
+                                        class="text-red-600 hover:text-red-800">Eliminar</a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button type="button"
+                                        onclick="mostrarDatosGenero({{ $genero->id }})">EDITAR</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <form action="" id="editarGenero" method="POST" style="display: none">
+                    @method('PUT')
+                    @csrf
+                    <label for="titulo">Genero a editar:</label><br>
+                    <input type="text" id="nombreGenero" name="nombreGenero" required><br>
+                    <input type="submit"></input>
+                </form>
 
-                    <label for="nombre">Nombre:</label><br>
-                    <input type="text" id="genero" name="genero" required><br>
-
-                    <input type="submit" value="Guardar Libro">
+                <form action="{{ route('crearGenero') }}" id="añadirGenero" method="POST" style="display: none">
+                    @csrf
+                    <label for="nombreGenero">Nuevo genero:</label><br>
+                    <input type="text" id="nombreGenero" name="nombreGenero" required><br>
+                    <input type="submit" value="Añadir Genero">
                 </form>
             </div>
         </div>
@@ -396,6 +493,40 @@
                 });
         }
 
+        function mostrarDatosEditorial(idEditorial) {
+            fetch(`/dashboard/mostrarEditorial/${idEditorial}`)
+                .then(response => response.json())
+                .then(data => {
+                    //ESTE IF ES HORRIBLE ALVARO
+                    document.getElementById('editarEditorial').style.display = (document.getElementById('editarEditorial').style
+                        .display == "none") ? 'block' : "none";
+                    document.getElementById('editarEditorial').action = '/dashboard/editarEditorial/' + idEditorial;
+
+                    document.getElementById('nombreEditorial').value = data.editorial;
+                })
+                .catch(error => {
+                    console.error('Error al obtener los datos del Editorial:', error);
+                });
+        }
+
+        // ----------- MOSTRAR DATOS GENERO -----------
+        function mostrarDatosGenero(idGenero) {
+            fetch(`/dashboard/mostrarGenero/${idGenero}`)
+                .then(response => response.json())
+                .then(data => {
+                    //ESTE IF ES HORRIBLE ALVARO
+                    document.getElementById('editarGenero').style.display = (document.getElementById('editarGenero')
+                        .style
+                        .display == "none") ? 'block' : "none";
+                    document.getElementById('editarGenero').action = '/dashboard/editarGenero/' + idGenero;
+
+                    document.getElementById('nombreGenero').value = data.genero;
+                })
+                .catch(error => {
+                    console.error('Error al obtener los datos del Genero:', error);
+                });
+        }
+
         function mostrarDatosLibro(idLibro) {
             fetch(`/dashboard/mostrarLibro/${idLibro}`)
                 .then(response => response.json())
@@ -428,6 +559,18 @@
             document.getElementById('añadirLibro').style.display = (document.getElementById('añadirLibro').style.display ==
                 "none") ? 'block' : "none";
         }
+        // --------- AÑADIR GENERO ----------
+        function añadirGenero() {
+            document.getElementById('añadirGenero').style.display = (document.getElementById('añadirGenero').style
+                .display ==
+                "none") ? 'block' : "none";
+        }
+        // --------- AÑADIR GENERO ----------
+        function añadirEditorial() {
+            document.getElementById('añadirEditorial').style.display = (document.getElementById('añadirEditorial').style
+                .display ==
+                "none") ? 'block' : "none";
+        }
 
         // ------------- EDITAR AUTOR ------------
         function editarAutor(idAutor) {
@@ -457,6 +600,15 @@
                     // Aquí puedes mostrar algún mensaje de error o manejar la situación de error de otra manera
                 });
         }
+
+        // TRAE EL MENSAJE PARA ELIMINAR O NO EL LIBRO
+        @if (session('success'))
+            alert("{{ session('success') }}");
+        @endif
+
+        @if (session('error'))
+            alert("{{ session('error') }}");
+        @endif
     </script>
 
 </x-app-layout>

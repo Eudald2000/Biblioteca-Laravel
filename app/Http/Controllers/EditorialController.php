@@ -18,9 +18,14 @@ class EditorialController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $nuevaEditorial = new Editorial();
+        $nuevaEditorial->editorial = $request->nombreEditorial;
+        $nuevaEditorial->save();
+
+        // Redirigir a alguna página o retornar una respuesta JSON
+        return redirect('dashboard');
     }
 
     /**
@@ -47,19 +52,27 @@ class EditorialController extends Controller
         //
     }
 
+    public function getEditorial($id) {
+        $editorial = Editorial::findOrFail($id);
+        return response()->json($editorial);
+    }
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, editorial $editorial)
-    {
-        //
+    public function update(Request $request, $id) {
+        $editorial = Editorial::findOrFail($id);
+        $editorial->editorial = $request->input('nombreEditorial');
+        $editorial->save();
+        return redirect('dashboard');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(editorial $editorial)
+    public function destroy(Request $request)
     {
-        //
+        $editorial = editorial::find($request->id);
+        $editorial->delete();
+        return redirect('/dashboard');
     }
 }

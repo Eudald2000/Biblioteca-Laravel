@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AutorController;
+use App\Http\Controllers\EditorialController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\FormularioController;
+use App\Http\Controllers\GeneroController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -66,6 +68,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard/mostrarAutor/{id}', [AutorController::class, 'getAutor']);
     Route::put('/dashboard/editarAutor/{id}', [AutorController::class, 'update'])->name('updateAutor');
     Route::post('/dashboard/añadirAutor', [AutorController::class, 'create'])->name('crearAutor');
+
+    Route::get('/eliminarGenero/{id}', [GeneroController::class, 'destroy']);
+    Route::get('/dashboard/mostrarGenero/{id}', [GeneroController::class, 'getGenero']);
+    Route::put('/dashboard/editarGenero/{id}', [GeneroController::class, 'update'])->name('updateGenero');
+    Route::post('/dashboard/añadirGenero', [GeneroController::class, 'create'])->name('crearGenero');
+
+    Route::get('/eliminarEditorial/{id}', [EditorialController::class, 'destroy']);
+    Route::get('/dashboard/mostrarEditorial/{id}', [EditorialController::class, 'getEditorial']);
+    Route::put('/dashboard/editarEditorial/{id}', [EditorialController::class, 'update'])->name('updateEditorial');
+    Route::post('/dashboard/añadirEditorial', [EditorialController::class, 'create'])->name('crearEditorial');
 });
 
 
