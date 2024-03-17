@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\prestamo;
+use App\Models\usuariosBloqueados;
 use Illuminate\Http\Request;
 
-class PrestamoController extends Controller
+class UsuariosBloqueadosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class PrestamoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(prestamo $prestamo)
+    public function show(usuariosBloqueados $usuariosBloqueados)
     {
         //
     }
@@ -42,7 +42,7 @@ class PrestamoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(prestamo $prestamo)
+    public function edit(usuariosBloqueados $usuariosBloqueados)
     {
         //
     }
@@ -50,7 +50,7 @@ class PrestamoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, prestamo $prestamo)
+    public function update(Request $request, usuariosBloqueados $usuariosBloqueados)
     {
         //
     }
@@ -58,7 +58,7 @@ class PrestamoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(prestamo $prestamo)
+    public function destroy(usuariosBloqueados $usuariosBloqueados)
     {
         //
     }

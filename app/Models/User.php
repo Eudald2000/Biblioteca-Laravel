@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function prestamos()
     {
-        return $this->hasMany(prestamo::class);
+        return $this->hasMany(venta::class);
     }
 
     public function resenas()

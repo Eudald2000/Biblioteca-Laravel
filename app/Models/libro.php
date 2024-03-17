@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,12 +22,12 @@ class libro extends Model
 
     public function autor()
     {
-        return $this->hasOne(autor::class);
+        return $this->belongsTo(Autor::class, 'autor_id');
     }
 
     public function editorial()
     {
-        return $this->hasOne(editorial::class);
+        return $this->belongsTo(Editorial::class, 'editorial_id');
     }
 
     public function generos()
@@ -34,9 +35,9 @@ class libro extends Model
         return $this->belongsToMany(genero::class);
     }
 
-    public function prestamos()
+    public function ventas()
     {
-        return $this->hasMany(prestamo::class);
+        return $this->hasMany(venta::class);
     }
 
     public function resenas()

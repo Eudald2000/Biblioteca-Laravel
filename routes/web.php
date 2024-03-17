@@ -54,15 +54,20 @@ Route::get('/google-auth/callback', function () {
     }
 });
 
-Route::get('/dashboard', [ProfileController::class,'gestion'])->middleware(['auth', 'role:admin'])->name('dashboard');
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'role:admin'])->name('dashboard');
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard', [ProfileController::class, 'gestion'])->name('dashboard');
 
-Route::get('/eliminarAutor/{id}', [AutorController::class, 'destroy'])->middleware(['auth', 'role:admin']);
-Route::get('/dashboard/mostrarAutor/{id}', [AutorController::class, 'getAutor']);
-Route::put('/dashboard/editarAutor/{id}', [AutorController::class, 'update'])->name('updateAutor');
-Route::post('/dashboard/añadirAutor', [AutorController::class, 'create'])->name('crearAutor');
+    Route::post('/dashboard/añadirLibro', [LibroController::class, 'create'])->name('crearLibro');
+    Route::get('/eliminarLibro/{id}', [LibroController::class, 'destroy']);
+    Route::get('/dashboard/mostrarLibro/{id}', [LibroController::class, 'getLibro']);
+    Route::put('/dashboard/editarLibro/{id}', [LibroController::class, 'update'])->name('updateLibro');
+
+    Route::get('/eliminarAutor/{id}', [AutorController::class, 'destroy']);
+    Route::get('/dashboard/mostrarAutor/{id}', [AutorController::class, 'getAutor']);
+    Route::put('/dashboard/editarAutor/{id}', [AutorController::class, 'update'])->name('updateAutor');
+    Route::post('/dashboard/añadirAutor', [AutorController::class, 'create'])->name('crearAutor');
+});
+
 
 
 Route::middleware('auth')->group(function () {
