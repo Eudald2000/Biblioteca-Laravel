@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\AutorController;
 use App\Http\Controllers\EditorialController;
 use Laravel\Socialite\Facades\Socialite;
@@ -10,6 +11,7 @@ use App\Http\Controllers\GeneroController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,7 @@ use App\Models\User;
 */
 
 
-Route::get('/', [LibroController::class, 'unLibroPorISBN']);
+Route::get('/', [LibroController::class, 'unLibroPorISBN'])->name('home');;
 // Route::get('/{user}', [LibroController::class, 'show']);
 Route::get('/filtrar', [FormularioController::class, 'index']);
 
@@ -78,6 +80,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard/mostrarEditorial/{id}', [EditorialController::class, 'getEditorial']);
     Route::put('/dashboard/editarEditorial/{id}', [EditorialController::class, 'update'])->name('updateEditorial');
     Route::post('/dashboard/añadirEditorial', [EditorialController::class, 'create'])->name('crearEditorial');
+
+    Route::get('/eliminarUsuario/{id}', [ProfileController::class, 'destroy2']);
+    Route::get('/dashboard/mostrarUsuario/{id}', [ProfileController::class, 'getUsuario']);
+    Route::put('/dashboard/editarUsuario/{id}', [ProfileController::class, 'update2'])->name('updateUsuario');
+    //Route::post('/dashboard/añadirUsuario', [ProfileController::class, 'create'])->name('crearUsuario');
+    // FALTA LA RUTA DE BLOQUEAR USUARIO
 });
 
 

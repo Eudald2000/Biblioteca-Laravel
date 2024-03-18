@@ -10,9 +10,9 @@ use App\Models\libro;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -63,12 +63,46 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function gestion(){
+    public function gestion()
+    {
         $libros = libro::all();
         $autores = autor::all();
         $editoriales = editorial::all();
         $generos = genero::all();
         $usuarios = user::all();
-        return view('dashboard',['libros'=>$libros,'autores'=>$autores,'editoriales'=>$editoriales,'generos'=>$generos,'usuarios'=>$usuarios]);
+        return view('dashboard', ['libros' => $libros, 'autores' => $autores, 'editoriales' => $editoriales, 'generos' => $generos, 'usuarios' => $usuarios]);
+    }
+
+    public function getUsuario($id)
+    {
+        $usuario = User::findOrFail($id);
+        return response()->json($usuario);
+    }
+
+    public function update2(Request $request, $id)
+    {
+        $usuario = User::findOrFail($id);
+        $usuario->name = $request->input('nombreUsuario');
+        $usuario->email = $request->input('email');
+        $usuario->save();
+        return redirect('dashboard');
+    }
+
+
+
+    public function destroy2(Request $request)
+    {
+        $usuario = User::find($request->id);
+
+        // Verificar si el usuario tiene el rol de administrador
+        if ($usuario->hasRole('admin')) {
+            return back()->with('error', 'No tienes permisos para eliminar este usuario.');
+        }
+
+        if ($usuario->delete()) {
+            return redirect('/dashboard');
+        } else {
+            return back()->with('error', 'No se pudo eliminar el usuario.');
+        }
     }
 }

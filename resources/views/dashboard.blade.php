@@ -19,12 +19,15 @@
                             class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out ml-4">AUTORES</button></a>
                     <a><button id="btnEditoriales"
                             class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out ml-4">EDITORIALES</button></a>
+                    <a><button id="btnUsuarios"
+                            class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out ml-4">USUARIOS</button></a>
+
                 </div>
             </div>
 
             {{-- ------ LIBROS ----- --}}
             <div id="divLibro" class="hidden">
-                <h2>LIBROS</h2>
+                <h1>LIBROS</h1>
                 <button type="button" onclick="añadirLibro()">AÑADIR</button>
                 <table id="tablaAutores" class="min-w-full divide-y divide-gray-200">
                     <thead>
@@ -276,7 +279,7 @@
 
             {{-- ------- AUTORES ------- --}}
             <div id="divAutor" class="hidden">
-                <h2>AUTORES</h2>
+                <h1>AUTORES</h1>
                 <button type="button" onclick="añadirAutor()">AÑADIR</button>
                 <table id="tablaAutores" class="min-w-full divide-y divide-gray-200">
                     <thead>
@@ -332,7 +335,7 @@
 
             {{-- ---------- EDITORIALES --------- --}}
             <div id="divEditorial" class="hidden">
-                <h2>EDITORIALES</h2>
+                <h1>EDITORIALES</h1>
                 <button type="button" onclick="añadirEditorial()">AÑADIR</button>
                 <table id="tablaEditoriales" class="min-w-full divide-y divide-gray-200">
                     <thead>
@@ -362,7 +365,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <button type="button"
-                                    onclick="mostrarDatosEditorial({{ $editorial->id }})">EDITAR</button>
+                                        onclick="mostrarDatosEditorial({{ $editorial->id }})">EDITAR</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -376,7 +379,8 @@
                     <input type="submit"></input>
                 </form>
 
-                <form action="{{ route('crearEditorial') }}" id="añadirEditorial" method="POST" style="display: none">
+                <form action="{{ route('crearEditorial') }}" id="añadirEditorial" method="POST"
+                    style="display: none">
                     @csrf
                     <label for="nombreEditorial">Nueva editorial:</label><br>
                     <input type="text" id="nombreEditorial" name="nombreEditorial" required><br>
@@ -386,7 +390,7 @@
 
             {{-- ------------- GENEROS ---------- --}}
             <div id="divGenero" class="hidden">
-                <h2>GENEROS</h2>
+                <h1>GENEROS</h1>
                 <button type="button" onclick="añadirGenero()">AÑADIR</button>
                 <table id="tablaGeneros" class="min-w-full divide-y divide-gray-200">
                     <thead>
@@ -437,6 +441,59 @@
                     <input type="submit" value="Añadir Genero">
                 </form>
             </div>
+
+            {{-- ----------USUARIOS ----------- --}}
+            <div id="divUsuarios" class="hidden">
+                <h1>USUARIOS</h1>
+                <table id="tablaEditoriales" class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ID</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Nombre</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Email</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Eliminar</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($usuarios as $usuario)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $usuario->id }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $usuario->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $usuario->email }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ url('/eliminarUsuario/' . $usuario->id) }}"
+                                        class="text-red-600 hover:text-red-800">Eliminar</a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button type="button"
+                                        onclick="mostrarDatosUsuario({{ $usuario->id }})">EDITAR</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <form action="" id="editarUsuario" method="POST" style="display: none">
+                    @method('PUT')
+                    @csrf
+                    <label for="nombre">Nuevo nombre:</label><br>
+                    <input type="text" id="nombreUsuario" name="nombreUsuario" required><br>
+                    <label for="email">Nuevo email:</label><br>
+                    <input type="email" id="email" name="email" required
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                    <input type="submit"></input>
+                </form>
+            </div>
         </div>
     </div>
     <script>
@@ -469,14 +526,43 @@
             document.getElementById('btnEditoriales').addEventListener('click', function() {
                 mostrarDiv('divEditorial');
             });
+
+            document.getElementById('btnUsuarios').addEventListener('click', function() {
+                mostrarDiv('divUsuarios');
+            });
         });
         const isbnInput = document.getElementById('isbn');
-
         isbnInput.addEventListener('input', function() {
             this.value = this.value.replace(/\D/g, ''); // Elimina caracteres no numéricos
         });
 
-        // -------- TRAE LOS DATOS DEL AUTOR ------------
+
+        // ------------ MOSTRAR FORMULARIOS -----------------
+        // -------- autor ------------
+        function añadirAutor() {
+            document.getElementById('añadirAutor').style.display = (document.getElementById('añadirAutor').style.display ==
+                "none") ? 'block' : "none";
+        }
+        // -------- libro ------------
+        function añadirLibro() {
+            document.getElementById('añadirLibro').style.display = (document.getElementById('añadirLibro').style.display ==
+                "none") ? 'block' : "none";
+        }
+        // --------- genero ----------
+        function añadirGenero() {
+            document.getElementById('añadirGenero').style.display = (document.getElementById('añadirGenero').style
+                .display ==
+                "none") ? 'block' : "none";
+        }
+        // --------- editorial ----------
+        function añadirEditorial() {
+            document.getElementById('añadirEditorial').style.display = (document.getElementById('añadirEditorial').style
+                .display ==
+                "none") ? 'block' : "none";
+        }
+
+        // -------- TRAE LOS DATOS ------------
+        // -------- autor -----------------
         function mostrarDatosAutor(idAutor) {
             fetch(`/dashboard/mostrarAutor/${idAutor}`)
                 .then(response => response.json())
@@ -493,12 +579,14 @@
                 });
         }
 
+        // -------- editorial -------------
         function mostrarDatosEditorial(idEditorial) {
             fetch(`/dashboard/mostrarEditorial/${idEditorial}`)
                 .then(response => response.json())
                 .then(data => {
                     //ESTE IF ES HORRIBLE ALVARO
-                    document.getElementById('editarEditorial').style.display = (document.getElementById('editarEditorial').style
+                    document.getElementById('editarEditorial').style.display = (document.getElementById(
+                            'editarEditorial').style
                         .display == "none") ? 'block' : "none";
                     document.getElementById('editarEditorial').action = '/dashboard/editarEditorial/' + idEditorial;
 
@@ -509,7 +597,7 @@
                 });
         }
 
-        // ----------- MOSTRAR DATOS GENERO -----------
+        // ----------- genero -----------
         function mostrarDatosGenero(idGenero) {
             fetch(`/dashboard/mostrarGenero/${idGenero}`)
                 .then(response => response.json())
@@ -527,6 +615,7 @@
                 });
         }
 
+        // ----------- libro ------------
         function mostrarDatosLibro(idLibro) {
             fetch(`/dashboard/mostrarLibro/${idLibro}`)
                 .then(response => response.json())
@@ -548,60 +637,25 @@
                 });
         }
 
-
-        // -------- AÑADIR AUTOR ------------
-        function añadirAutor() {
-            document.getElementById('añadirAutor').style.display = (document.getElementById('añadirAutor').style.display ==
-                "none") ? 'block' : "none";
-        }
-        // -------- AÑADIR LIBRO ------------
-        function añadirLibro() {
-            document.getElementById('añadirLibro').style.display = (document.getElementById('añadirLibro').style.display ==
-                "none") ? 'block' : "none";
-        }
-        // --------- AÑADIR GENERO ----------
-        function añadirGenero() {
-            document.getElementById('añadirGenero').style.display = (document.getElementById('añadirGenero').style
-                .display ==
-                "none") ? 'block' : "none";
-        }
-        // --------- AÑADIR GENERO ----------
-        function añadirEditorial() {
-            document.getElementById('añadirEditorial').style.display = (document.getElementById('añadirEditorial').style
-                .display ==
-                "none") ? 'block' : "none";
-        }
-
-        // ------------- EDITAR AUTOR ------------
-        function editarAutor(idAutor) {
-            var nuevoNombre = document.getElementById('nombreAutor').value;
-            fetch(`/dashboard/editarAutor/${idAutor}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        nombre: nuevoNombre
-                    })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error al modificar el autor');
-                    }
-                    return response.json();
-                })
+        function mostrarDatosUsuario(idUsuario) {
+            fetch(`/dashboard/mostrarUsuario/${idUsuario}`)
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Autor modificado correctamente:', data);
-                    // Aquí puedes mostrar algún mensaje de éxito o actualizar la interfaz de usuario si es necesario
+                    //ESTE IF ES HORRIBLE ALVARO
+                    document.getElementById('editarUsuario').style.display = (document.getElementById('editarUsuario')
+                        .style
+                        .display == "none") ? 'block' : "none";
+                    document.getElementById('editarUsuario').action = '/dashboard/editarUsuario/' + idUsuario;
+
+                    document.getElementById('nombreUsuario').value = data.name;
+                    document.getElementById('email').value = data.email;
                 })
                 .catch(error => {
-                    console.error('Error al modificar el autor:', error);
-                    // Aquí puedes mostrar algún mensaje de error o manejar la situación de error de otra manera
+                    console.error('Error al obtener los datos del autor:', error);
                 });
         }
 
-        // TRAE EL MENSAJE PARA ELIMINAR O NO EL LIBRO
+        // TRAE EL MENSAJE DE ELIMINAR O NO EL LIBRO
         @if (session('success'))
             alert("{{ session('success') }}");
         @endif
@@ -609,6 +663,7 @@
         @if (session('error'))
             alert("{{ session('error') }}");
         @endif
+
     </script>
 
 </x-app-layout>

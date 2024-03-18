@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -50,7 +51,7 @@ class User extends Authenticatable
     //     return $this->hasOne(rol::class);
     // }
 
-    public function prestamos()
+    public function ventas()
     {
         return $this->hasMany(venta::class);
     }
