@@ -84,6 +84,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/eliminarUsuario/{id}', [ProfileController::class, 'destroy2']);
     Route::get('/dashboard/mostrarUsuario/{id}', [ProfileController::class, 'getUsuario']);
     Route::put('/dashboard/editarUsuario/{id}', [ProfileController::class, 'update2'])->name('updateUsuario');
+    Route::get('/dashboard/bloquearUsuario/{email}', [ProfileController::class, 'bloquearUsuario'])->name('bloquear.usuario');
     //Route::post('/dashboard/añadirUsuario', [ProfileController::class, 'create'])->name('crearUsuario');
     // FALTA LA RUTA DE BLOQUEAR USUARIO
 });

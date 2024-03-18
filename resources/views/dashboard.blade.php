@@ -463,6 +463,9 @@
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Editar</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Bloquear</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -479,6 +482,10 @@
                                     <button type="button"
                                         onclick="mostrarDatosUsuario({{ $usuario->id }})">EDITAR</button>
                                 </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ route('bloquear.usuario', $usuario->email) }}" class="text-red-600 hover:text-red-800">Bloquear</a>
+                                </td>
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -637,6 +644,7 @@
                 });
         }
 
+        // ----------- usuario ------------
         function mostrarDatosUsuario(idUsuario) {
             fetch(`/dashboard/mostrarUsuario/${idUsuario}`)
                 .then(response => response.json())
@@ -654,8 +662,19 @@
                     console.error('Error al obtener los datos del autor:', error);
                 });
         }
+        function bloquearUsuario(bloquearUsuario) {
+            fetch(`/dashboard/bloquearUsuario/${bloquearUsuario}`)
+                .then(response => response.json())
+                .then(data => {
 
-        // TRAE EL MENSAJE DE ELIMINAR O NO EL LIBRO
+
+                })
+                .catch(error => {
+                    console.error('Error al obtener los datos del autor:', error);
+                });
+        }
+
+        // TRAE EL MENSAJE DE ERROR ELIMINAR O NO
         @if (session('success'))
             alert("{{ session('success') }}");
         @endif
@@ -663,7 +682,6 @@
         @if (session('error'))
             alert("{{ session('error') }}");
         @endif
-
     </script>
 
 </x-app-layout>

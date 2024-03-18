@@ -8,6 +8,7 @@ use App\Models\editorial;
 use App\Models\genero;
 use App\Models\libro;
 use App\Models\User;
+use App\Models\usuariosBloqueados;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -104,5 +105,22 @@ class ProfileController extends Controller
         } else {
             return back()->with('error', 'No se pudo eliminar el usuario.');
         }
+    }
+
+    public function bloquearUsuario($email)
+    {
+        $usuario = User::where('email', $email)->first();
+
+        // Verificar si el usuario tiene el rol de administrador
+        if ($usuario->hasRole('admin')) {
+            return redirect('/dashboard')->with('error', 'No puedes bloquear a un administrador.');
+        }
+
+        // Guardar el email en la tabla usuarios_bloqueados
+        $usuarioBloqueado = new usuariosBloqueados();
+        $usuarioBloqueado->email = $email;
+        $usuarioBloqueado->save();
+
+        return redirect('/dashboard')->with('success', 'Usuario bloqueado correctamente.');
     }
 }
