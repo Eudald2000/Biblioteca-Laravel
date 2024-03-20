@@ -15,9 +15,10 @@ class libro extends Model
         'autor_id',
         'editorial_id',
         'ano_publicacion',
-        'ISBN',
+        'isbn',
         'disponible',
-        'precio'
+        'precio',
+        'imagen',
     ];
 
     public function autor()

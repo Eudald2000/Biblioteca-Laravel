@@ -9,8 +9,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <a href="{{ url('/') }}"><button
-                            class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out">INICIO</button></a>
                     <a><button id="btnLibros"
                             class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out ml-4">LIBROS</button></a>
                     <a><button id="btnGeneros"
@@ -27,78 +25,8 @@
 
             {{-- ------ LIBROS ----- --}}
             <div id="divLibro" class="hidden">
-                <h1>LIBROS</h1>
-                <button type="button" onclick="añadirLibro()">AÑADIR</button>
-                <table id="tablaAutores" class="min-w-full divide-y divide-gray-200">
-                    <thead>
-                        <tr class="bg-gray-50">
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                ID</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Titulo</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Autor</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Editorial</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Año publicación</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                ISBN</th>
-                            {{-- <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Disponible</th> --}}
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Precio</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Eliminar</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Editar</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($libros as $libro)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->titulo }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @isset($libro->autor)
-                                        {{ $libro->autor->nombre }}
-                                    @else
-                                        Sin datos
-                                    @endisset
-                                </td>
-                                {{-- <td class="px-6 py-4 whitespace-nowrap">{{ $libro->editorial->editorial }}</td> --}}
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @isset($libro->editorial)
-                                        {{ $libro->editorial->editorial }}
-                                    @else
-                                        Sin datos
-                                    @endisset
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->ano_publicacion }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->ISBN }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->precio }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="{{ url('/eliminarLibro/' . $libro->id) }}"
-                                        class="text-red-600 hover:text-red-800">Eliminar</a>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <button type="button"
-                                        onclick="mostrarDatosLibro({{ $libro->id }})">EDITAR</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <h1 class="text-2xl font-bold text-black mt-4 mb-4 text-center underline">LIBROS</h1>
+                <button type="button" onclick="añadirLibro()" class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out ml-4">AÑADIR</button>
                 <form action="" id="editarLibro" method="POST" style="display: none">
                     @method('PUT')
                     @csrf
@@ -185,6 +113,16 @@
                             id="precio" name="precio" type="number" step="0.01" placeholder="Precio"
                             pattern="\d+(\.\d{1,2})?">
                     </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="imagen">
+                            Imagen
+                        </label>
+                        {{-- FALTA EL REQUIRED --}}
+                        <input
+                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                               id="imagen" name="imagen" type="file">
+                    </div>
+
                     <input type="submit"></input>
                 </form>
                 <form action="{{ route('crearLibro') }}" id="añadirLibro" method="POST" style="display: none">
@@ -272,15 +210,111 @@
                             id="precio" name="precio" type="number" step="0.01" placeholder="Precio"
                             pattern="\d+(\.\d{1,2})?">
                     </div>
-
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="imagen">
+                            Imagen
+                        </label>
+                        {{-- FALTA EL REQUIRED --}}
+                        <input
+                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                               id="imagen" name="imagen" type="file">
+                    </div>
                     <input type="submit" value="Añadir Libro">
                 </form>
+                <div class="flex justify-center">
+                <table id="tablaAutores" class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ID</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Titulo</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Autor</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Editorial</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Año publicación</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ISBN</th>
+                            {{-- <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Disponible</th> --}}
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Precio</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Eliminar</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($libros as $libro)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->id }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->titulo }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @isset($libro->autor)
+                                        {{ $libro->autor->nombre }}
+                                    @else
+                                        Sin datos
+                                    @endisset
+                                </td>
+                                {{-- <td class="px-6 py-4 whitespace-nowrap">{{ $libro->editorial->editorial }}</td> --}}
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @isset($libro->editorial)
+                                        {{ $libro->editorial->editorial }}
+                                    @else
+                                        Sin datos
+                                    @endisset
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->ano_publicacion }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->isbn }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $libro->precio }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <a href="{{ url('/eliminarLibro/' . $libro->id) }}"
+                                        class="text-red-600 hover:text-red-800">Eliminar</a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button type="button"
+                                        onclick="mostrarDatosLibro({{ $libro->id }})">EDITAR</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                </div>
+
             </div>
 
             {{-- ------- AUTORES ------- --}}
             <div id="divAutor" class="hidden">
-                <h1>AUTORES</h1>
-                <button type="button" onclick="añadirAutor()">AÑADIR</button>
+                <h1 class="text-2xl font-bold text-black mt-4 mb-4 text-center underline">AUTORES</h1>
+                <button type="button" onclick="añadirAutor()" class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out ml-4">AÑADIR</button>
+                <form action="" id="editarAutor" method="POST" style="display: none">
+                    @method('PUT')
+                    @csrf
+                    <label for="titulo">Nombre Autor a editar:</label><br>
+                    <input type="text" id="nombreAutor" name="nombreAutor" required><br>
+                    <input type="submit"></input>
+                </form>
+
+                <form action="{{ route('crearAutor') }}" id="añadirAutor" method="POST" style="display: none">
+                    @csrf
+                    <label for="nombreAutor">Nombre nuevo autor:</label><br>
+                    <input type="text" id="nombreAutor" name="nombreAutor" required><br>
+                    <input type="submit" value="Añadir Autor">
+                </form>
+                <div class="flex justify-center">
                 <table id="tablaAutores" class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr class="bg-gray-50">
@@ -315,28 +349,29 @@
                         @endforeach
                     </tbody>
                 </table>
-                <form action="" id="editarAutor" method="POST" style="display: none">
-                    @method('PUT')
-                    @csrf
-                    <label for="titulo">Nombre Autor a editar:</label><br>
-                    <input type="text" id="nombreAutor" name="nombreAutor" required><br>
-                    <input type="submit"></input>
-                </form>
-
-                <form action="{{ route('crearAutor') }}" id="añadirAutor" method="POST" style="display: none">
-                    @csrf
-                    <label for="nombreAutor">Nombre nuevo autor:</label><br>
-                    <input type="text" id="nombreAutor" name="nombreAutor" required><br>
-                    <input type="submit" value="Añadir Autor">
-                </form>
-
-
+                </div>
             </div>
 
             {{-- ---------- EDITORIALES --------- --}}
             <div id="divEditorial" class="hidden">
-                <h1>EDITORIALES</h1>
-                <button type="button" onclick="añadirEditorial()">AÑADIR</button>
+                <h1 class="text-2xl font-bold text-black mt-4 mb-4 text-center underline">EDITORIALES</h1>
+                <button type="button" onclick="añadirEditorial()" class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out ml-4">AÑADIR</button>
+                <form action="" id="editarEditorial" method="POST" style="display: none">
+                    @method('PUT')
+                    @csrf
+                    <label for="titulo">Editorial a editar:</label><br>
+                    <input type="text" id="nombreEditorial" name="nombreEditorial" required><br>
+                    <input type="submit"></input>
+                </form>
+
+                <form action="{{ route('crearEditorial') }}" id="añadirEditorial" method="POST"
+                    style="display: none">
+                    @csrf
+                    <label for="nombreEditorial">Nueva editorial:</label><br>
+                    <input type="text" id="nombreEditorial" name="nombreEditorial" required><br>
+                    <input type="submit" value="Añadir Editorial">
+                </form>
+                <div class="flex justify-center">
                 <table id="tablaEditoriales" class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr class="bg-gray-50">
@@ -371,27 +406,28 @@
                         @endforeach
                     </tbody>
                 </table>
-                <form action="" id="editarEditorial" method="POST" style="display: none">
-                    @method('PUT')
-                    @csrf
-                    <label for="titulo">Editorial a editar:</label><br>
-                    <input type="text" id="nombreEditorial" name="nombreEditorial" required><br>
-                    <input type="submit"></input>
-                </form>
-
-                <form action="{{ route('crearEditorial') }}" id="añadirEditorial" method="POST"
-                    style="display: none">
-                    @csrf
-                    <label for="nombreEditorial">Nueva editorial:</label><br>
-                    <input type="text" id="nombreEditorial" name="nombreEditorial" required><br>
-                    <input type="submit" value="Añadir Editorial">
-                </form>
+                </div>
             </div>
 
             {{-- ------------- GENEROS ---------- --}}
             <div id="divGenero" class="hidden">
-                <h1>GENEROS</h1>
-                <button type="button" onclick="añadirGenero()">AÑADIR</button>
+                <h1 class="text-2xl font-bold text-black mt-4 mb-4 text-center underline">GENEROS</h1>
+                <button type="button" onclick="añadirGenero()" class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white font-bold py-2 px-4 rounded border border-solid border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-600 transition duration-300 ease-in-out ml-4">AÑADIR</button>
+                <form action="" id="editarGenero" method="POST" style="display: none">
+                    @method('PUT')
+                    @csrf
+                    <label for="titulo">Genero a editar:</label><br>
+                    <input type="text" id="nombreGenero" name="nombreGenero" required><br>
+                    <input type="submit"></input>
+                </form>
+
+                <form action="{{ route('crearGenero') }}" id="añadirGenero" method="POST" style="display: none">
+                    @csrf
+                    <label for="nombreGenero">Nuevo genero:</label><br>
+                    <input type="text" id="nombreGenero" name="nombreGenero" required><br>
+                    <input type="submit" value="Añadir Genero">
+                </form>
+                <div class="flex justify-center">
                 <table id="tablaGeneros" class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr class="bg-gray-50">
@@ -426,25 +462,23 @@
                         @endforeach
                     </tbody>
                 </table>
-                <form action="" id="editarGenero" method="POST" style="display: none">
-                    @method('PUT')
-                    @csrf
-                    <label for="titulo">Genero a editar:</label><br>
-                    <input type="text" id="nombreGenero" name="nombreGenero" required><br>
-                    <input type="submit"></input>
-                </form>
-
-                <form action="{{ route('crearGenero') }}" id="añadirGenero" method="POST" style="display: none">
-                    @csrf
-                    <label for="nombreGenero">Nuevo genero:</label><br>
-                    <input type="text" id="nombreGenero" name="nombreGenero" required><br>
-                    <input type="submit" value="Añadir Genero">
-                </form>
+                </div>
             </div>
 
             {{-- ----------USUARIOS ----------- --}}
             <div id="divUsuarios" class="hidden">
-                <h1>USUARIOS</h1>
+                <h1 class="text-2xl font-bold text-black mt-4 mb-4 text-center underline">USUARIOS</h1>
+                <form action="" id="editarUsuario" method="POST" style="display: none">
+                    @method('PUT')
+                    @csrf
+                    <label for="nombre">Nuevo nombre:</label><br>
+                    <input type="text" id="nombreUsuario" name="nombreUsuario" required><br>
+                    <label for="email">Nuevo email:</label><br>
+                    <input type="email" id="email" name="email" required
+                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                    <input type="submit"></input>
+                </form>
+                <div class="flex justify-center">
                 <table id="tablaEditoriales" class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr class="bg-gray-50">
@@ -490,16 +524,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <form action="" id="editarUsuario" method="POST" style="display: none">
-                    @method('PUT')
-                    @csrf
-                    <label for="nombre">Nuevo nombre:</label><br>
-                    <input type="text" id="nombreUsuario" name="nombreUsuario" required><br>
-                    <label for="email">Nuevo email:</label><br>
-                    <input type="email" id="email" name="email" required
-                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
-                    <input type="submit"></input>
-                </form>
+                </div>
             </div>
         </div>
     </div>

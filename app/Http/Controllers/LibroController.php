@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\autor;
+use App\Models\editorial;
 use App\Models\libro;
+use App\Models\resena;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -43,6 +45,7 @@ class LibroController extends Controller
         $nuevoLibro->titulo = $request->titulo;
         $nuevoLibro->sinopsis = $request->sinopsis;
         $nuevoLibro->precio = $request->precio;
+        $nuevoLibro->imagen = $request->imagen;
         $nuevoLibro->disponible = true;
 
         $nuevoLibro->save();
@@ -81,7 +84,8 @@ class LibroController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $libro = Libro::findOrFail($id);
         $libro->titulo = $request->input('titulo');
         $libro->sinopsis = $request->input('sinopsis');
@@ -91,6 +95,7 @@ class LibroController extends Controller
         $libro->editorial_id = $request->input('editorial');
         $libro->ISBN = $request->input('isbn');
         $libro->precio = $request->input('precio');
+        $libro->imagen = $request->input('imagen');
         $libro->save();
         return redirect('dashboard');
     }
@@ -100,16 +105,26 @@ class LibroController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-{
-    try {
-        // Intenta eliminar el libro
-        Libro::findOrFail($id)->delete();
+    {
+        try {
+            // Intenta eliminar el libro
+            Libro::findOrFail($id)->delete();
 
-        // Si no hay excepción, redirige o muestra un mensaje de éxito
-        return redirect()->back()->with('success', 'Libro eliminado correctamente');
-    } catch (QueryException $e) {
-        // Captura la excepción de integridad referencial
-        return redirect()->back()->with('error', 'No se puede eliminar el libro. Tiene relaciones con otras tablas.');
+            // Si no hay excepción, redirige o muestra un mensaje de éxito
+            return redirect()->back()->with('success', 'Libro eliminado correctamente');
+        } catch (QueryException $e) {
+            // Captura la excepción de integridad referencial
+            return redirect()->back()->with('error', 'No se puede eliminar el libro. Tiene relaciones con otras tablas.');
+        }
     }
-}
+
+    public function infoLibro(Request $request)
+    {
+
+        $libro = Libro::where('isbn', $request->isbn)->first();
+        $autor = Autor::find($libro->autor_id);
+        $editorial = Editorial::find($libro->editorial_id);
+        $reseñas = resena::where('isbn', $libro->isbn)->get();
+        return view('infoLibro', ['libro' => $libro, 'autor' => $autor, 'editorial' => $editorial, 'reseñas' => $reseñas]);
+    }
 }

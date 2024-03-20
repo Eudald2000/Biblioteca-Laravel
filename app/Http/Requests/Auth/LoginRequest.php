@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\User;
+use App\Models\usuariosBloqueados;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -33,16 +34,25 @@ class LoginRequest extends FormRequest
         // Verifica si el correo existe en la base de datos
         $user = User::where('email', $this->input('email'))->first();
 
-        if (! $user) {
+        if (!$user) {
             // El correo no está registrado
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
 
+        // Verifica si el usuario está bloqueado
+        $usuarioBloqueado = usuariosBloqueados::where('email', $user->email)->first();
+
+        if ($usuarioBloqueado) {
+            // El usuario está bloqueado, lanza una excepción de validación
+            throw ValidationException::withMessages([
+                'email' => 'Este usuario está bloqueado.',
+            ]);
+        }
         // Si el campo google_id está vacío, verifica la contraseña normalmente
         if (empty($user->google_id)) {
-            if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
                 RateLimiter::hit($this->throttleKey());
 
                 throw ValidationException::withMessages([
@@ -61,7 +71,7 @@ class LoginRequest extends FormRequest
 
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -79,6 +89,6 @@ class LoginRequest extends FormRequest
 
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('email')) . '|' . $this->ip());
     }
 }

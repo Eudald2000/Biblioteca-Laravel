@@ -18,6 +18,7 @@ return new class extends Migration
         $table->unsignedBigInteger('libro_id');
         $table->foreign('libro_id')->references('id')->on('libros');
         $table->string('resena', 5000);
+        $table -> string('isbn');
         $table->timestamps();
     });
 }

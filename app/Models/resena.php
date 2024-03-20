@@ -12,7 +12,8 @@ class resena extends Model
     protected $filleable = [
         'user_id',
         'libro_id',
-        'resena'
+        'resena',
+        'isbn'
     ];
 
     public function libro()

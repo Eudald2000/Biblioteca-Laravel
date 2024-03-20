@@ -4,6 +4,12 @@
     width:10rem;
     height:10rem;
 }
+.margenL{
+    margin-left: 400px
+}
+.margenPeque{
+    margin-left: 150px
+}
     </style>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -20,15 +26,15 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div style="background-image: url('{{ asset('storage/6193217.jpg') }}');" class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-cover bg-center">
-            <div>
+    <body class="font-sans text-gray-900 antialiased" style="background-image: url('{{ asset('storage/fondoLogin.jpg') }}'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+        <div class="min-h-screen flex flex-col sm:justify-center items-left pt-6 sm:pt-0 bg-cover bg-center margenL">
+            <div class="">
                 <a href="/">
-                <img src="storage/logo.png" alt="LOGO" class="logo" />
+                <img src="storage/logo.png" alt="LOGO" class="logo margenPeque" />
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 transparent shadow-md overflow-hidden sm:rounded-lg ">
+            <div class="w-full sm:max-w-md mt-6 px-6 py-4 transparent shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>

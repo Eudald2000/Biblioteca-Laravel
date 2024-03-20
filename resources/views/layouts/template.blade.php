@@ -160,10 +160,10 @@
       document.getElementById("menu-bg").classList.toggle("change-bg");
       }
    </script>
-   <body>
+   <body style="background-image: url('{{ asset('storage/libroFondo.jpg') }}'); background-repeat: no-repeat; background-size: cover; background-position: center;">
       @yield('content')
    </body>
-   <footer class="bg-gray-800 text-white p-8">
+   <footer class="transparent text-white p-8">
       <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
         <div class="mb-4 md:mb-0">
           <p>&copy; Biblioteca Eudald</p>

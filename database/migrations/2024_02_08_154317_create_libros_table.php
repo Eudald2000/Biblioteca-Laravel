@@ -18,11 +18,12 @@ return new class extends Migration
             $table->unsignedBigInteger('editorial_id')->nullable();
             $table -> foreign('autor_id')->references('id')->on('autors')->onDelete('set null');
             $table -> foreign('editorial_id')->references('id')->on('editorials')->onDelete('set null');
-            $table -> string('sinopsis');
+            $table -> text('sinopsis');
             $table -> date('ano_publicacion');
-            $table -> string('ISBN');
+            $table -> string('isbn');
             $table -> boolean('disponible');
             $table -> double('precio');
+            $table -> string('imagen')->nullable();
             $table->timestamps();
         });
     }

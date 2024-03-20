@@ -26,6 +26,11 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 
 Route::get('/', [LibroController::class, 'unLibroPorISBN'])->name('home');;
+Route::get('/infoLibro/{isbn}', [LibroController::class, 'infoLibro'])->name('info.libro');
+// Route::get('/infoLibro/{isbn}', function () {
+//     return "{{$isbn}}";
+// })->name('info.libro');;
+
 // Route::get('/{user}', [LibroController::class, 'show']);
 Route::get('/filtrar', [FormularioController::class, 'index']);
 
