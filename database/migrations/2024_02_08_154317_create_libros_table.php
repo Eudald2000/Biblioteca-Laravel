@@ -23,7 +23,7 @@ return new class extends Migration
             $table -> string('isbn');
             $table -> boolean('disponible');
             $table -> double('precio');
-            $table -> string('imagen')->nullable();
+            $table -> string('imagen');
             $table->timestamps();
         });
     }

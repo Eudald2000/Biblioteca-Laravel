@@ -48,7 +48,8 @@ class LibroController extends Controller
         $nuevoLibro->titulo = $request->titulo;
         $nuevoLibro->sinopsis = $request->sinopsis;
         $nuevoLibro->precio = $request->precio;
-        $nuevoLibro->imagen = $request->imagen;
+        $path = $request->file('imagen')->store('libro', 'public');
+        $nuevoLibro->imagen = 'storage/'.$path;
         $nuevoLibro->disponible = true;
 
         $nuevoLibro->save();
@@ -96,9 +97,12 @@ class LibroController extends Controller
         $libro->autor_id = $request->input('autor');
         //$libro->genero_id = $request->input('genero');
         $libro->editorial_id = $request->input('editorial');
-        $libro->ISBN = $request->input('isbn');
+        $libro->isbn = $request->input('isbn');
         $libro->precio = $request->input('precio');
-        $libro->imagen = $request->input('imagen');
+        if ($request->hasFile('imagen')) {
+            $path = $request->file('imagen')->store('libro', 'public');
+            $libro->imagen = 'storage/'.$path;
+        }
         $libro->save();
         return redirect('dashboard');
     }

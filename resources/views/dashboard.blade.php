@@ -119,7 +119,7 @@
 
                     <input type="submit"></input>
                 </form>
-                <form action="{{ route('crearLibro') }}" id="añadirLibro" method="POST" style="display: none">
+                <form action="{{ route('crearLibro') }}" id="añadirLibro" method="POST" style="display: none" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="titulo">
@@ -210,8 +210,8 @@
                         </label>
                         {{-- FALTA EL REQUIRED --}}
                         <input
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                               id="imagen" name="imagen" type="file">
+                            required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="imagen" name="imagen" type="file">
                     </div>
                     <input type="submit" value="Añadir Libro">
                 </form>
@@ -237,9 +237,6 @@
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 ISBN</th>
-                            {{-- <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Disponible</th> --}}
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Precio</th>
@@ -655,7 +652,7 @@
                     document.getElementById('sinopsis').value = data.sinopsis;
                     document.getElementById('ano_publicacion').value = data.ano_publicacion;
                     /// autor, editorial, categoria
-                    document.getElementById('isbn').value = data.ISBN;
+                    document.getElementById('isbn').value = data.isbn;
                     document.getElementById('precio').value = data.precio;
                 })
                 .catch(error => {
