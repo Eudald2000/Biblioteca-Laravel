@@ -12,15 +12,24 @@ class ResenaController extends Controller
      */
     public function index()
     {
-        //
+        $reseñas = Resena::all(); // Obtén todas las reseñas
+    return view('lista_reseñas', ['reseñas' => $reseñas]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $nuevaReseña = new Resena();
+        $nuevaReseña -> resena = $request->resena;
+        $nuevaReseña -> libro_id = $request->libro_id;
+        $nuevaReseña -> isbn = $request->isbn;
+        $nuevaReseña -> user_id = $request->user_id;
+
+        $nuevaReseña->save();
+        return back();
+
     }
 
     /**
@@ -58,8 +67,12 @@ class ResenaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(resena $resena)
-    {
-        //
-    }
+    public function destroy(Request $request)
+{
+    $resena = Resena::find($request->id);
+    $resena->delete();
+
+    return redirect()->back()->with('success', 'Reseña eliminada correctamente');
+}
+
 }

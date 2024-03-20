@@ -14,14 +14,15 @@ return new class extends Migration
     Schema::create('resenas', function (Blueprint $table) {
         $table->id();
         $table->unsignedBigInteger('user_id')->nullable();
-        $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         $table->unsignedBigInteger('libro_id');
-        $table->foreign('libro_id')->references('id')->on('libros');
+        $table->foreign('libro_id')->references('id')->on('libros')->onDelete('cascade');
         $table->string('resena', 5000);
-        $table -> string('isbn');
+        $table->string('isbn');
         $table->timestamps();
     });
 }
+
 
 
     /**

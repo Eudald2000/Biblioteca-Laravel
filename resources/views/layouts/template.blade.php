@@ -111,6 +111,9 @@
          height: 460px;
          transform: translate(-60%,-30%);
          }
+         body.popup-open {
+        overflow: hidden;
+    }
       </style>
    </head>
    <header class="transparent p-8 flex justify-between items-center fixed w-full z-10 text-white">

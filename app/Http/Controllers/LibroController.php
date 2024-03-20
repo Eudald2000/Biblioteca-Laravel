@@ -9,6 +9,7 @@ use App\Models\resena;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LibroController extends Controller
@@ -17,17 +18,19 @@ class LibroController extends Controller
      * Display a listing of the resource.
      */
 
-    public function unLibroPorISBN()
-    {
-        // Desactivar temporalmente el modo estricto
-        DB::statement("SET SESSION sql_mode=''");
+     public function unLibroPorISBN()
+     {
+         // Desactivar temporalmente el modo estricto
+         DB::statement("SET SESSION sql_mode=''");
 
-        $libros = Libro::select('libros.*')
-            ->groupBy('isbn')
-            ->get();
+         $libros = Libro::select('libros.*')
+             ->where('disponible', true)
+             ->groupBy('isbn')
+             ->get();
 
-        return view('inicio', ['libros' => $libros]);
-    }
+         return view('inicio', ['libros' => $libros]);
+     }
+
 
 
     /**
@@ -125,6 +128,7 @@ class LibroController extends Controller
         $autor = Autor::find($libro->autor_id);
         $editorial = Editorial::find($libro->editorial_id);
         $reseñas = resena::where('isbn', $libro->isbn)->get();
-        return view('infoLibro', ['libro' => $libro, 'autor' => $autor, 'editorial' => $editorial, 'reseñas' => $reseñas]);
+        $user = Auth::user();
+        return view('infoLibro', ['libro' => $libro, 'autor' => $autor, 'editorial' => $editorial, 'reseñas' => $reseñas, 'user' => $user]);
     }
 }

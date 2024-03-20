@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\FormularioController;
 use App\Http\Controllers\GeneroController;
+use App\Http\Controllers\ResenaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -26,15 +27,11 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 
 Route::get('/', [LibroController::class, 'unLibroPorISBN'])->name('home');;
-Route::get('/infoLibro/{isbn}', [LibroController::class, 'infoLibro'])->name('info.libro');
-// Route::get('/infoLibro/{isbn}', function () {
-//     return "{{$isbn}}";
-// })->name('info.libro');;
-
-// Route::get('/{user}', [LibroController::class, 'show']);
 Route::get('/filtrar', [FormularioController::class, 'index']);
 
-
+Route::get('/infoLibro/{isbn}', [LibroController::class, 'infoLibro'])->name('info.libro');
+Route::post('/infoLibro/{isbn}/crearResena', [ResenaController::class, 'create'])->name('crear.reseña');
+Route::get('/eliminarReseña/{id}', [ResenaController::class, 'destroy']);
 
 Route::get('/google-auth/redirect', function () {
     return Socialite::driver('google')->redirect();
