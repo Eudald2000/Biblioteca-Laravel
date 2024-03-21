@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(usersSeeder::class);
         $this->call(ResenasSeeder::class);
         $this->call(Libro_GeneroSeeder::class);
+        $this->call(VentasSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

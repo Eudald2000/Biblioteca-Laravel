@@ -12,7 +12,7 @@ class venta extends Model
     protected $filleable = [
         'user_id',
         'libro_id',
-        'precio'
+        //'precio'
     ];
 
     public function user()

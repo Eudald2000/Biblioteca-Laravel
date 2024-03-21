@@ -118,7 +118,7 @@ class librosSeeder extends Seeder
                 'sinopsis' => ' La novela sigue a la familia Bundren mientras emprenden un peligroso viaje para enterrar a su matriarca, Addie, según su último deseo. A medida que el grupo se enfrenta a una serie de obstáculos físicos y emocionales en su camino hacia el cementerio, cada miembro de la familia revela sus propias luchas internas y secretos, explorando temas de vida, muerte, sacrificio y redención.',
                 'ano_publicacion' => '1930-04-06',
                 'isbn' => '9788420674379',
-                'disponible' => true,
+                'disponible' => false,
                 'precio' => 12.99,
                 'imagen' => 'storage/agonizo.jpg',
                 'created_at' => now()
@@ -130,7 +130,7 @@ class librosSeeder extends Seeder
                 'sinopsis' => 'Esta colección de cuentos del maestro del terror Edgar Allan Poe incluye algunas de sus obras más célebres, como "El corazón delator", "El cuervo" y "La caída de la Casa Usher". A través de sus historias de horror, misterio y macabro, Poe explora los límites de la psique humana y las oscuras fuerzas que acechan en los rincones más profundos de la mente y el alma.',
                 'ano_publicacion' => '1856-01-01',
                 'isbn' => '9788483465693',
-                'disponible' => true,
+                'disponible' => false,
                 'precio' => 11.99,
                 'imagen' => 'storage/narraciones.jpg',
                 'created_at' => now()
