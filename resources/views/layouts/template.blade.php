@@ -128,7 +128,7 @@
              <ul>
                 <li><a href="/">Inicio</a></li>
                 <li><a href="#">Perfil</a></li>
-                <li><a href="/filtrar">Filtrar</a></li>
+                {{-- <li><a href="/filtrar">Filtrar</a></li> --}}
                 @if (Auth::check())
                   <!-- Authentication -->
                   <li>
