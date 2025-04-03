@@ -10,11 +10,11 @@
             <div>
                 <h1 class="text-5xl font-bold border-b-2 border-white text-white">{{ $libro->titulo }}</h1>
                 <h1 class="text-2xl font-bold text-white mb-2">{{ $libro->sinopsis }}</h1>
-                <h1 class="text-2xl font-bold text-white mb-2">Autor: {{ $autor->nombre }}</h1>
-                <h1 class="text-2xl font-bold text-white mb-2">Editorial: {{ $editorial->editorial }}</h1>
-                <h1 class="text-2xl font-bold text-white mb-2">Fecha publicacion: {{ $libro->ano_publicacion }}</h1>
-                <h1 class="text-2xl font-bold text-white mb-2">ISBN: {{ $libro->isbn }}</h1>
-                <h1 class="text-2xl font-bold text-white mb-2">Precio: {{ $libro->precio }} &euro;</h1>
+                <h1 class="text-2xl font-bold text-white mb-2">Autor: {{ $autor?->nombre ?? 'Sin datos' }}</h1>
+                <h1 class="text-2xl font-bold text-white mb-2">Editorial: {{ $editorial->editorial ?? 'Sin datos'}}</h1>
+                <h1 class="text-2xl font-bold text-white mb-2">Fecha publicacion: {{ $libro->ano_publicacion ?? 'Sin datos'}}</h1>
+                <h1 class="text-2xl font-bold text-white mb-2">ISBN: {{ $libro->isbn ?? 'Sin datos'}}</h1>
+                <h1 class="text-2xl font-bold text-white mb-2">Precio: {{ $libro->precio ?? 'Sin datos'}} &euro;</h1>
             </div>
         </div>
     </div>
